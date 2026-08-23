@@ -387,71 +387,7 @@ async function testSupabase() {
     if (!ok) console.warn('Supabase not reachable — the app will use local fallback data.');
 })();
 
-async function loadMechanicRequests() {
 
-    const requestList = document.querySelector("#request-list");
-
-    if (!requestList) return;
-
-    requestList.innerHTML = "<p>Loading requests...</p>";
-
-    const { data, error } = await supabaseClient
-        .from("Requests")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-    if (error) {
-        console.error("Request loading error:", error);
-
-        requestList.innerHTML = `
-            <p>❌ Failed to load requests</p>
-        `;
-
-        return;
-    }
-
-    if (!data || data.length === 0) {
-        requestList.innerHTML = `
-            <p>📭 No driver requests yet.</p>
-        `;
-
-        return;
-    }
-
-    requestList.innerHTML = data.map(request => `
-        <div class="request-card">
-
-            <h3>🆘 ${request.driver_name}</h3>
-
-            <p>📞 ${request.driver_phone}</p>
-
-            <p>📍 ${request.location}</p>
-
-            <p>🚗 Problem: ${request.problem}</p>
-
-            <p>
-                Status:
-                <strong>${request.status || "Pending"}</strong>
-            </p>
-
-            ${
-                request.status === "Pending"
-                ? `
-                    <button onclick="acceptRequest(${request.id})">
-                        ✅ Accept Request
-                    </button>
-                `
-                : `
-                    <p>✅ Request accepted</p>
-                `
-            }
-
-        </div>
-    `).join("");
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    loadMechanicRequests();
 });function openMechanicApp() {
     showRegistration();
 }
