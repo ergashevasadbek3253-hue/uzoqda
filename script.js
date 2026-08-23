@@ -387,7 +387,6 @@ async function testSupabase() {
     if (!ok) console.warn('Supabase not reachable — the app will use local fallback data.');
 })();
 
-
-});function openMechanicApp() {
+function openMechanicApp() {
     showRegistration();
 }
